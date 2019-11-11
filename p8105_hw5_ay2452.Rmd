@@ -95,7 +95,8 @@ sim_results %>%
     mean = mean(p.value < 0.05)
   ) %>%
 ggplot(aes(x = beta1, y = mean)) + 
-geom_line()
+geom_line() +
+  labs(title = "Power of test vs true value of beta1")
 
 ##The upward trend of the graph seems to show that as the effect size increases, the power seemingly increases.
 ```
@@ -107,7 +108,10 @@ sim_results %>%
     mean = mean(estimate)
   ) %>%
 ggplot(aes(x = beta1, y = mean)) + 
-geom_line()  
+geom_line() + 
+  labs(title = "Average estimate of beta1 vs true value of beta1")
+  
+)  
 ```
 
 ```{r Problem 3.4}
@@ -118,7 +122,8 @@ sim_results %>%
     mean = mean(estimate)
   ) %>% 
 ggplot(aes(x = beta1, y = mean)) +
-  geom_line()
+  geom_line() +
+  labs(title = "Average estimate of beta1  for samples where null was rejected vs true value of beta1")
 ```
 
 ##The sample average of beta1 across tests for which the null is rejected is not approximately equal to the true value of beta1. The plot shows that for the sample average is greater than the true value of beta--the graph has an exponential-like curve.
