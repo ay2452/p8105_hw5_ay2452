@@ -38,12 +38,23 @@ output = map(iris_with_missing, iris_function)
 Study_df = list.files(path = "./data",
              pattern = "*.csv", 
              full.names = TRUE) %>%
-  map_dfr(read_csv, .id = "group") %>%
+  map_dfr(read_csv, .id = "subject_id") %>%
+  janitor::clean_names() %>%
   mutate(
+    group = as.character(subject_id),
     group = recode(group, "1" = "control", "2" = "control", "3" = "control", "4" = "control", "5" = "control", "6" = "control", "7" = "control", "8" = "control", "9" = "control", "10" = "control", "11" = "experiment", "12" = "experiment", "13" = "experiment", "14" = "experiment", "15" = "experiment", "16" = "experiment", "17" = "experiment", "18" = "experiment", "19" = "experiment", "20" = "experiment" )) %>% 
   pivot_longer(
     week_1: week_8,
     names_to = "time", 
     values_to = "observations"
   )
+
+Study_df %>% 
+  ggplot(aes(x = time, y = observations, group = group, color = group)) + 
+  geom_path() +
+  labs(title = "Observation of each subject over time") + 
+  viridis::scale_color_viridis(
+    discrete = TRUE)
+##Over time, it appears that the general trend of number of observations increases for individuals in the experimental group. Individuals in the control group seem to start and end at around the same observation number. 
+```
 ```
