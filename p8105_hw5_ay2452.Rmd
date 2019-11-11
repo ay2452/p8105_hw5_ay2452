@@ -59,7 +59,7 @@ Study_df %>%
 ##Over time, it appears that the general trend of number of observations increases for individuals in the experimental group. Individuals in the control group seem to start and end at around the same observation number. 
 ```
 
-```{r Problem 3}
+```{r Problem 3.1}
 sim_regression = function(beta1) {
   
   sim_data = tibble(
@@ -88,14 +88,37 @@ sim_results =
   unnest(estimate_dfs)
 ```
 
-```{r}
+```{r Problem 3.2}
 sim_results %>%
   group_by(beta1) %>%
   summarize(
     mean = mean(p.value < 0.05)
   ) %>%
-  ggplot(aes(x = beta1, y = mean)) + 
-  geom_line()
+ggplot(aes(x = beta1, y = mean)) + 
+geom_line()
 
-##The upward trend of the graph seems to show that as the effect size increases, the  seemingly power increases.
+##The upward trend of the graph seems to show that as the effect size increases, the power seemingly increases.
 ```
+
+```{r Problem 3.3}
+sim_results %>%
+  group_by(beta1) %>%
+  summarize(
+    mean = mean(estimate)
+  ) %>%
+ggplot(aes(x = beta1, y = mean)) + 
+geom_line()  
+```
+
+```{r Problem 3.4}
+sim_results %>%
+  filter(p.value < 0.05) %>%
+  group_by(beta1) %>%
+  summarize(
+    mean = mean(estimate)
+  ) %>% 
+ggplot(aes(x = beta1, y = mean)) +
+  geom_line()
+```
+
+##The sample average of beta1 across tests for which the null is rejected is not approximately equal to the true value of beta1. The plot shows that for the sample average is greater than the true value of beta--the graph has an exponential-like curve.
