@@ -111,7 +111,6 @@ ggplot(aes(x = beta1, y = mean)) +
 geom_line() + 
   labs(title = "Average estimate of beta1 vs true value of beta1")
   
-)  
 ```
 
 ```{r Problem 3.4}
