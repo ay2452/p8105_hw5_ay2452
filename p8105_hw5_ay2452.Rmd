@@ -7,6 +7,7 @@ output: github_document
 
 ```{r setup}
 library(tidyverse)
+library(viridis)
 
 set.seed(10)
 
@@ -57,4 +58,24 @@ Study_df %>%
     discrete = TRUE)
 ##Over time, it appears that the general trend of number of observations increases for individuals in the experimental group. Individuals in the control group seem to start and end at around the same observation number. 
 ```
+
+```{r Problem 3}
+sim_regression = function(beta1) {
+  
+  sim_data = tibble(
+    
+    n = 30,
+    x_i1 = rnorm(n, mean = 1, sd = 1),
+    beta0 = 2, 
+    sigma2 = 50,
+    y = beta0+beta1 * x_i1 + rnorm(n, 0, sigma2)
+  )
+  
+  ls_fit = lm(y ~ x_i1, data = sim_data)
+  
+  ls_fit %>% 
+  broom::tidy() %>%
+  filter(term == x_i1) %>%
+  select(estimate, p.value)
+}
 ```
